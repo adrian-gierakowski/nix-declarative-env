@@ -3,28 +3,30 @@ let
   nixEnvConfigDirPath = ".config/nix/env";
   nixSourcesPath = "${nixEnvConfigDirPath}/nix/sources.nix";
   homeDir = builtins.getEnv "HOME";
-  nixpkgs = (import "${homeDir}/${nixSourcesPath}").nixpkgs;
-
+  sources = import "${homeDir}/${nixSourcesPath}";
   # Custom version of nix.
   nixGit = builtins.fetchGit {
     name = "nix-git-source";
     url  = "https://github.com/adrian-gierakowski/nix.git";
     ref  = "ag/s3-configurable-timeout";
-    rev  = "56e9ac7ba2fab539fd20a9701a85f4108124073e";
+    rev  = "6f162d8fcf354e513e165ae780f517e86c1a00ca";
   };
   nixSrcTarbals = (import "${nixGit}/release.nix" { nix = nixGit; }).tarball;
-  pkgs = import nixpkgs {
+  pkgs = import sources.nixpkgs {
     overlays = [
       (self: super: {
         nix = super.nix.overrideAttrs (oldAttrs: {
           src = "${nixSrcTarbals}/tarballs/nix-${nixSrcTarbals.version}.tar.bz2";
 
+          # Theses seem to fail on MacOS due to sandbox path being too long
           checkPhase = "true";
           installCheckPhase = "true";
         });
       })
     ];
   };
+
+  yarn2nixFromSource = (import sources.yarn2nix { inherit pkgs; }).yarn2nix;
   nix = pkgs.nix;
 
   ensureNixOnPath = ''
@@ -35,6 +37,7 @@ let
   '';
 in {
   inherit nix;
+  inherit (import ./cachix.nix { system = builtins.currentSystem; }) cachix;
   cacert = pkgs.cacert;
 
   nixpkgs-info = pkgs.writeScriptBin "nixpkgs-info" ''
@@ -48,26 +51,39 @@ in {
     #!${pkgs.stdenv.shell}
     ${ensureNixOnPath}
 
-    exec nix-env --install --remove-all --file $HOME/${nixEnvConfigDirPath}
+    exec nix-env "$@" --install --remove-all --file $HOME/${nixEnvConfigDirPath}
   '';
 
   inherit (pkgs)
+    niv
+    nixfmt
     binutils-unwrapped # readelf
-    # cachix
+    colordiff
     direnv
     fd
+    fswatch
     fzf
+    git
     ipcalc
+    jq
     lorri
-    niv
     nix-prefetch-git
-    nixfmt
     nixpkgs-fmt
     privoxy
     ripgrep
     sops
+    terraform
     tinyproxy
-    yarn2nix-moretea
+    tmux
+    watch
+    yarn2nix
+    yq
+    # nix-du
+    # dot
   ;
+
+  hub = pkgs.gitAndTools.hub;
+  # nix-visualize = import sources.nix-visualize { inherit pkgs; };
+  # yarn2nix = yarn2nixFromSource;
   linuxkit-builder = /nix/store/jgq3savsyyrpsxvjlrz41nx09z7r0lch-linuxkit-builder;
 }
