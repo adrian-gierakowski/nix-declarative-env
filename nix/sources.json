@@ -1,38 +1,14 @@
 {
-    "nix-visualize": {
-        "branch": "master",
-        "description": "Uses the Nix package manager to visualize the dependencies of a given package",
-        "homepage": null,
-        "owner": "craigmbooth",
-        "repo": "nix-visualize",
-        "rev": "e9e3411fa16bbd28bca47b3d22ee6743f4abfe02",
-        "sha256": "13j0ad8rnjhnh8ndmjl1bcsm4mqs0ahw2qjbnhk2s6d1z9qmzgk1",
-        "type": "tarball",
-        "url": "https://github.com/craigmbooth/nix-visualize/archive/e9e3411fa16bbd28bca47b3d22ee6743f4abfe02.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
     "nixpkgs": {
         "branch": "master",
         "description": "Nix Packages collection",
         "homepage": null,
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "d50881ea950fc695e62499c0380312c420b1f596",
-        "sha256": "0amc1l1k8pw40am3bvxk4aipzcl3zcw9j6plzkr5ip9h5bp15dir",
+        "rev": "cbb95673926205f7a54af97ecfa32bc7be917603",
+        "sha256": "1c8lcwm491icx96aimq0hh9kbvpbz7ds52f65j5ibffhf67ar3w9",
         "type": "tarball",
-        "url": "https://github.com/nixos/nixpkgs/archive/d50881ea950fc695e62499c0380312c420b1f596.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "yarn2nix": {
-        "branch": "master",
-        "description": "Generate nix expressions from a yarn.lock file [maintainer=???]",
-        "homepage": "",
-        "owner": "adrian-gierakowski",
-        "repo": "yarn2nix",
-        "rev": "139263566f80825350a0b14a89e9848d768126b7",
-        "sha256": "0z1gx5mqsi0ny3lcdvq4rvjr3bnp84pkfz7mdpcza6b4vmigmpxn",
-        "type": "tarball",
-        "url": "https://github.com/adrian-gierakowski/yarn2nix/archive/139263566f80825350a0b14a89e9848d768126b7.tar.gz",
+        "url": "https://github.com/nixos/nixpkgs/archive/cbb95673926205f7a54af97ecfa32bc7be917603.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     }
 }
